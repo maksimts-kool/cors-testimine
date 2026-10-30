@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 
-// Lubatud päritolud tulevad keskkonnamuutujast, et arendus ja toodang oleksid eraldi
 export function lubatudParitolud(env = process.env) {
   return (env.CORS_ORIGINS || 'http://localhost:3000')
     .split(',')
@@ -12,12 +11,10 @@ export function lubatudParitolud(env = process.env) {
 export function createApp({ origins = lubatudParitolud() } = {}) {
   const app = express();
 
-  // CORS peab olema esimene, et päised jõuaksid ka vea- ja 401-vastustele
   app.use(cors({
     origin: (origin, cb) => {
-      // Ilma Origin-päiseta päringud (curl, sama päritolu) lastakse läbi
       if (!origin || origins.includes(origin)) cb(null, true);
-      else cb(null, false); // keelatud: CORS-päiseid ei lisata, brauser blokeerib
+      else cb(null, false); // keelatud: CORS-päiseid ei lisata
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -27,22 +24,18 @@ export function createApp({ origins = lubatudParitolud() } = {}) {
 
   app.use(express.json());
 
-  // Lihtne päring: GET ilma kohandatud päisteta, preflight'i ei teki
   app.get('/api/avalik', (req, res) => {
     res.json({ sonum: 'Tere! See on avalik vastus.', aeg: new Date().toISOString() });
   });
 
-  // application/json sunnib brauseri enne OPTIONS-päringut saatma
   app.post('/api/andmed', (req, res) => {
     res.status(201).json({ salvestatud: req.body });
   });
 
-  // DELETE ei ole "lihtne" meetod, seega samuti preflight
   app.delete('/api/andmed/:id', (req, res) => {
     res.json({ kustutatud: req.params.id });
   });
 
-  // Küpsis: frontend peab saatma credentials: 'include'
   app.post('/api/login', (req, res) => {
     const crossSite = process.env.COOKIE_CROSS_SITE === '1';
     res.cookie('sessioon', 'demo', {
@@ -58,7 +51,6 @@ export function createApp({ origins = lubatudParitolud() } = {}) {
     res.clearCookie('sessioon').json({ sisse: false });
   });
 
-  // Autentimine: preflight tuleb ilma küpsise ja tokenita, seega OPTIONS lastakse läbi
   function nouaSisselogimist(req, res, next) {
     if (req.method === 'OPTIONS') return next();
     const kypsis = /(?:^|;\s*)sessioon=demo(?:;|$)/.test(req.headers.cookie || '');
@@ -71,7 +63,6 @@ export function createApp({ origins = lubatudParitolud() } = {}) {
     res.json({ kasutaja: 'demo', viis: req.headers.authorization ? 'token' : 'küpsis' });
   });
 
-  // Näitab, et ka 500-vastusel on CORS-päised olemas
   app.get('/api/viga', () => {
     throw new Error('Tahtlik serveriviga');
   });

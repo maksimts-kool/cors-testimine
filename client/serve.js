@@ -11,7 +11,7 @@ const tyybid = {
   '.css': 'text/css; charset=utf-8',
 };
 
-// Väike staatiline server; sama frontend käivitatakse mitmel pordil = mitu päritolu
+// Staatiline server
 export function createClientServer() {
   return http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://x');

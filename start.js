@@ -9,7 +9,6 @@ const origins = lubatudParitolud();
 
 createApp({ origins }).listen(API_PORT, () => {
   console.log(`API:              http://localhost:${API_PORT}`);
-  console.log(`Lubatud päritolud: ${origins.join(', ')}`);
 });
 
 createClientServer().listen(LUBATUD_PORT, () => {

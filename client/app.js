@@ -1,4 +1,3 @@
-// API asub alati teisel pordil, seega on iga päring cross-origin
 const API = new URLSearchParams(location.search).get('api') || 'http://localhost:4000';
 
 const testid = [
@@ -46,7 +45,7 @@ const testid = [
   },
   {
     nimi: 'mode: \'no-cors\'',
-    selgitus: 'Levinud "parandus", mis ei tööta: päring läheb läbi, aga vastus on läbipaistmatu (status 0, keha tühi).',
+    selgitus: 'Levinud "parandus", mis ei tööta: päring läheb läbi, aga vastus on läbipaistmatu.',
     kaivita: () => fetch(`${API}/api/avalik`, { mode: 'no-cors' }),
   },
 ];

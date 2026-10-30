@@ -1,11 +1,11 @@
-# CORS-i labor
+# CORS-i testimine
 
 Väike näidisprojekt, kus näed CORS-i töötamas ja ebaõnnestumas päris brauseris.
 
 - **API** (`server/app.js`): Express + `cors` pordil **4000**. Lubatud päritolud tulevad muutujast `CORS_ORIGINS`.
-- **Frontend** (`client/`): sama leht töötab kahel pordil:
-  - **http://localhost:3000**: lubatud päritolu, kõik päringud õnnestuvad;
-  - **http://localhost:3001**: keelatud päritolu, brauser blokeerib vastused.
+- **Frontend** (`client/`): töötab kahel pordil:
+  - **http://localhost:3000**: lubatud päritolu.
+  - **http://localhost:3001**: keelatud päritolu.
 
 ## Käivitamine
 
@@ -22,12 +22,12 @@ Ava http://localhost:3000, vajuta **Käivita kõik** ja ava DevTools → Network
 
 | Test | Preflight? | Mida õpetab |
 |---|---|---|
-| Lihtne GET | ei | Lihtne päring vajab ainult `Allow-Origin` päist |
+| Lihtne GET | ei | Vajab ainult `Allow-Origin` päist |
 | POST JSON-iga | jah | `application/json` tekitab preflight'i |
 | DELETE | jah | Mitte-lihtne meetod tekitab preflight'i |
 | Sisselogimine küpsisega | jah | `credentials: 'include'` + `Allow-Credentials: true` |
 | Authorization-päis | jah | Preflight lastakse autentimisest läbi |
-| Ilma sisselogimiseta | ei | 401-vastusel on samuti CORS-päised, seega viga on loetav |
+| Ilma sisselogimiseta | ei | 401-vastusel on samuti CORS-päised |
 | Serveriviga | ei | 500-vastusel on samuti CORS-päised |
 | `mode: 'no-cors'` | ei | See ei paranda midagi, vastus on läbipaistmatu |
 
