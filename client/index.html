@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CORS-i labor</title>
+<style>
+  :root {
+    --bg: #f7f8f9; --fg: #1c2328; --muted: #5a6670; --line: #d8dee3;
+    --code-bg: #eceff2; --accent: #1f6f8b; --ok: #1d7a46; --err: #b3261e;
+    --sans: system-ui, sans-serif; --mono: ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14191d; --fg: #e3e8ec; --muted: #98a4ad; --line: #2c353c; --code-bg: #1d242a; --accent: #6cbad6; --ok: #5cc98a; --err: #f28b82; color-scheme: dark; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); }
+  main { max-width: 52rem; margin: 0 auto; padding: 2rem 16px 4rem; }
+  h1 { margin: 0 0 .25rem; }
+  a { color: var(--accent); }
+  code, pre { font-family: var(--mono); font-size: .85rem; }
+  .origin { padding: .75rem 1rem; border: 1px solid var(--line); border-radius: 6px; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+  .test { display: grid; grid-template-columns: 1fr auto; gap: .5rem 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .test > div { min-width: 0; }
+  .test h2 { font-size: 1rem; margin: 0; }
+  .test p { margin: .25rem 0 0; color: var(--muted); font-size: .9rem; }
+  pre { grid-column: 1 / -1; margin: 0; padding: .75rem; background: var(--code-bg); border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+  pre:empty { display: none; }
+  .ok { border-left: 3px solid var(--ok); }
+  .err { border-left: 3px solid var(--err); }
+  button { font: 500 .9rem var(--sans); color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 4px; padding: .4rem .9rem; cursor: pointer; align-self: start; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toolbar { display: flex; gap: .5rem; margin: 1.5rem 0 .5rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>CORS-i labor</h1>
+  <p>See leht teeb päringuid API-sse teiselt päritolult. Ava DevTools → <strong>Network</strong> ja <strong>Console</strong>, et näha preflight-päringuid ja CORS-vigu.</p>
+
+  <div class="origin">
+    <span>Leht: <code id="leht"></code></span>
+    <span>API: <code id="api"></code></span>
+    <span><a id="vaheta" href="#"></a></span>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="koik">Käivita kõik</button>
+    <button id="puhasta">Tühjenda</button>
+  </div>
+
+  <div id="testid"></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

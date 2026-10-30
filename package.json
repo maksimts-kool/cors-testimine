@@ -1,0 +1,15 @@
+{
+  "name": "cors-juhend",
+  "version": "1.0.0",
+  "description": "CORS-i näidisprojekt: Express API ja kahel päritolul töötav frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node start.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
